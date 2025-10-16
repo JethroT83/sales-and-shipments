@@ -1,0 +1,22 @@
+import { Link, Outlet } from "react-router-dom";
+
+export default function Layout() {
+  return (
+    <div className="app">
+      <header>
+        <nav>
+          <Link to="/">Home</Link>{" | "}
+          <Link to="/orders">Orders</Link>{" | "}
+          <Link to="/login">Login</Link>
+        </nav>
+      </header>
+
+      <main>
+        {/* Child route content renders here */}
+        <Outlet />
+      </main>
+
+      <footer>© Your Co</footer>
+    </div>
+  );
+}

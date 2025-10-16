@@ -1,0 +1,73 @@
+services:
+  localstack:
+    image: localstack/localstack:stable
+    ports: ["4566:4566","4510-4559:4510-4559"]
+    environment:
+      - SERVICES=s3,sqs,sns,dynamodb,cloudwatch,iam
+      - DEBUG=0
+      - AWS_DEFAULT_REGION=us-east-1
+    volumes:
+      - "./.localstack:/var/lib/localstack"
+    networks:
+      - stack
+
+  postgres:
+    env_file:
+      - ./src/.env
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"   # optional: expose to host
+#    volumes:
+#      - ./volumes/db:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - stack
+
+
+  app:
+    build: ./src
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    container_name: django-app
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings
+      - AWS_ENDPOINT=http://localstack:4566
+      - AWS_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - ORDERS_QUEUE_URL=http://localstack:4566/000000000000/orders-queue
+      - SHIPMENTS_TOPIC_ARN=arn:aws:sns:us-east-1:000000000000:shipments-topic
+      - LABELS_BUCKET=tf-orders-labels
+      - DDB_TABLE=orders
+    ports:
+      - "8000:8000"
+      - "5173:5173"
+    volumes:
+      - ./src:/app
+    depends_on: [localstack, postgres]
+    networks:
+      - stack
+
+  terraform:
+    image: hashicorp/terraform:1.9.5
+    working_dir: /workspace
+    volumes:
+      - ./envs/local:/workspace
+      - ~/.aws:/root/.aws:ro   # optional: use host AWS creds
+    environment:
+      AWS_PROFILE: ${AWS_PROFILE:-}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-}
+      AWS_DEFAULT_REGION: ${AWS_REGION:-us-east-1}
+    networks:
+      - stack
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  stack:
+    driver: bridge
+
