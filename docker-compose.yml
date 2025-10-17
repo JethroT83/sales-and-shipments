@@ -33,7 +33,7 @@ services:
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     container_name: django-app
     environment:
-      - DJANGO_SETTINGS_MODULE=config.settings
+      - DJANGO_SETTINGS_MODULE=settings
       - AWS_ENDPOINT=http://localstack:4566
       - AWS_REGION=us-east-1
       - AWS_ACCESS_KEY_ID=test

@@ -82,7 +82,7 @@ REST_FRAMEWORK = {
 
 REST_USE_JWT=True
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = 'providers.urls'
 
 TEMPLATES = [
     {
