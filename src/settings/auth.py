@@ -1,4 +1,5 @@
 from .app import APP_URL
+from django.urls import reverse_lazy
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -19,8 +20,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # (Nice defaults for local dev)
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
+LOGIN_URL = reverse_lazy('auth:login')
+LOGOUT_REDIRECT_URL = 'auth:login'
+LOGIN_REDIRECT_URL = 'web:dashboard'
 
 # Optional: email-first auth (vs username)
 # ACCOUNT_LOGIN_METHODS = {"email"}  # or "email"

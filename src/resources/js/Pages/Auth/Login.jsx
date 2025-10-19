@@ -4,21 +4,25 @@ import InputLabel from '@Components/InputLabel';
 import PrimaryButton from '@Components/PrimaryButton';
 import TextInput from '@Components/TextInput';
 import GuestLayout from '@Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import {route, getCsrf} from '@Js/support'
 
 export default function Login({ status, canResetPassword }) {
+    const { urls } = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
         remember: false,
     });
 
+
     const submit = (e) => {
         e.preventDefault();
 
-//         post(route('login'), {
-//             onFinish: () => reset('password'),
-//         });
+        post(route('auth:login'), {
+            headers: { 'X-CSRFToken': getCsrf()},
+            onFinish: () => reset('password'),
+        });
     };
 
     return (
@@ -81,9 +85,7 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="mt-4 flex items-center justify-end">
-
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                    <PrimaryButton type='submit' className="ms-4" disabled={processing}>
                         Log in
                     </PrimaryButton>
                 </div>

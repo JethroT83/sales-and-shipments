@@ -7,7 +7,6 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig(({ mode }) => {
     return {
-        base: '/static/',
         plugins: [
             react(),
             tailwindcss()
@@ -18,6 +17,7 @@ export default defineConfig(({ mode }) => {
             alias: {
                 '@Assets': path.resolve(__dirname, './resources/assets'),
                 '@Css': path.resolve(__dirname, './resources/css'),
+                '@Js': path.resolve(__dirname, './resources/js'),
                 '@Layouts': path.resolve(__dirname, './resources/js/Layouts'),
                 '@Pages': path.resolve(__dirname, './resources/js/Pages'),
                 '@Components': path.resolve(__dirname, './resources/js/Components'),
@@ -50,7 +50,8 @@ export default defineConfig(({ mode }) => {
 //                path: '/../',
 //            },
             proxy: {
-                '^/(api|admin|auth|login)': {
+                '/jsreverse': 'http://localhost:8000',
+                '^/(api|admin|auth|login|dashboard)': {
                     target: 'http://localhost:8000',
                     changeOrigin: true,
                 }

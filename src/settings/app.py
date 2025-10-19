@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from support.helpers import env, base_path
 
+APP_NAME = "Sales and Shipments"
+ENV = env("ENV", "development")
 APP_URL = env("APP_URL", "http://localhost:8000")
 WEB_URL = env("WEB_URL", "http://localhost:5173")
 
@@ -43,6 +45,7 @@ INSTALLED_APPS = [
 
     ## django ##
     'dj_rest_auth',
+    'django_js_reverse',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,12 +58,15 @@ INSTALLED_APPS = [
     # If you want registration endpoints:
     #'dj_rest_auth.registration',
     'app',
+    'app.http.lib.django_vite_url.HttpLibConfig',
     'inertia',
     'rest_framework',
     'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
+    'app.http.middleware.shared.inertia_share',
+
     'allauth.account.middleware.AccountMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -82,7 +88,7 @@ REST_FRAMEWORK = {
 
 REST_USE_JWT=True
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = 'providers.urls'
 
 TEMPLATES = [
     {
@@ -104,7 +110,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'app.wsgi.application'
+# WSGI_APPLICATION = 'app.wsgi'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

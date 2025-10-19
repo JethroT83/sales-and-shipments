@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.9",
     "@inertiajs/core": "^2.2.8",
     "@inertiajs/react": "2.2.8",
     "@tailwindcss/vite": "^4.1.14",

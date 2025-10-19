@@ -31,6 +31,7 @@ CORS_ALLOWED_ORIGINS = env("CORS_ALLOWED_ORIGINS", [WEB_URL], cast=list)  # e.g.
 #     "http://host.docker.internal:5173"
 # ], cast=list)  # e.g. "https://app.example.com"
 CORS_ALLOW_CREDENTIALS = env("CORS_ALLOW_CREDENTIALS", True, cast=bool)
+# CSRF_HEADER_NAME = 'X-XSRF-TOKEN'
 CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS", [WEB_URL], cast=list)  # e.g. "https://app.example.com"
 # CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS", [
 #     "http://localhost:5173",

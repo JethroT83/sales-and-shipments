@@ -33,3 +33,13 @@ def env(name, default=None, *, cast=str):
 
 def generate_idempotency_key():
     return uuid4().hex  # 32 chars
+
+
+def middleware(decorators, view):
+    for d in reversed(decorators):
+        view = d(view)
+    return view
+
+
+from pprint import pprint
+

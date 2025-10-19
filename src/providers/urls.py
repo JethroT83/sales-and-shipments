@@ -17,20 +17,19 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from app.api import OrderViewSet
-from app.views.auth import login
-from django.shortcuts import render
-
-router = DefaultRouter()
-router.register(r"orders", OrderViewSet, basename="orders")
+from django_js_reverse.views import urls_js
 
 urlpatterns = [
-    # path("/"),
-    # path('', lambda request: render(request, 'index.html'), name='index'),
-    path("admin/", admin.site.urls),
-    path("api/", include(router.urls)),
-    path("api/auth/", include("dj_rest_auth.urls")),  # login, logout, password reset, user
-    path("api/auth/registration/", include("dj_rest_auth.registration.urls")),  # signup (needs allauth)
-    path("login", login, name="login"),
+
+    path("jsreverse/", urls_js, name="js_reverse"),
+    # path("admin/", admin.site.urls),
+    #
+    # # API first (usually versioned)
+    # path("api/", include(("routing.api", "api"), namespace="api")),
+
+    # Auth routes (login/reset/etc.)
+    path("", include(("routing.auth", "auth"), namespace="auth")),
+
+    # # Regular web pages (Inertia)
+    path("", include(("routing.web", "web"), namespace="web")),
 ]
