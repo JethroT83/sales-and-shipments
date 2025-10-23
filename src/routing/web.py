@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from support.route import route
 from app.http.views import dashboard
+from app.http.views import profile
 from django.contrib.auth.decorators import login_required
 
 
@@ -18,4 +19,14 @@ urlpatterns = [
         ),
         name="dashboard",
     ),
+
+    path(
+        "profile",
+        route(
+            login_required(),
+            get=profile.edit,
+            post=profile.update,
+        ),
+        name="profile"
+    )
 ]

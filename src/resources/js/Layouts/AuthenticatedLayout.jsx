@@ -60,20 +60,20 @@ export default function AuthenticatedLayout({ header, children }) {
                                             </button>
                                         </span>
                                     </Dropdown.Trigger>
-{/*                                     <Dropdown.Content> */}
-{/*                                         <Dropdown.Link */}
-{/*                                             href={route('profile.edit')} */}
-{/*                                         > */}
-{/*                                             Profile */}
-{/*                                         </Dropdown.Link> */}
-{/*                                         <Dropdown.Link */}
-{/*                                             href={route('logout')} */}
-{/*                                             method="post" */}
-{/*                                             as="button" */}
-{/*                                         > */}
-{/*                                             Log Out */}
-{/*                                         </Dropdown.Link> */}
-{/*                                     </Dropdown.Content> */}
+                                    <Dropdown.Content>
+                                        <Dropdown.Link
+                                            href={route('web:profile')}
+                                        >
+                                            Profile
+                                        </Dropdown.Link>
+                                        <Dropdown.Link
+                                            href={route('auth:logout')}
+                                            method="post"
+                                            as="button"
+                                        >
+                                            Log Out
+                                        </Dropdown.Link>
+                                    </Dropdown.Content>
                                 </Dropdown>
                             </div>
                         </div>
@@ -146,17 +146,17 @@ export default function AuthenticatedLayout({ header, children }) {
                             </div>
                         </div>
                         <div className="mt-3 space-y-1">
-{/*                             < ResponsiveNavLink */}
-{/*                                 href = {route('profile.edit')} > */}
-{/*                                        Profile */}
-{/*                                        < / ResponsiveNavLink > */}
-{/*                                            < ResponsiveNavLink */}
-{/*                                 method = "post" */}
-{/*                                 href = {route('logout')} */}
-{/*                                 as ="button" */}
-{/*                                 > */}
-{/*                                 Log Out */}
-{/*                             < / ResponsiveNavLink > */}
+                            < ResponsiveNavLink
+                                href = {route('web:profile')} >
+                                       Profile
+                                       < / ResponsiveNavLink >
+                                           < ResponsiveNavLink
+                                method = "post"
+                                href = {route('auth:logout')}
+                                as ="button"
+                                >
+                                Log Out
+                            < / ResponsiveNavLink >
                         </div>
                     </div>
                 </div>

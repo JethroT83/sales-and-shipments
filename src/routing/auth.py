@@ -62,5 +62,5 @@ urlpatterns = [
     #
     # path('password', use(authn, authenticate_session.password_update), name='password.update'),
     #
-    # path('logout', use(authn, authenticate_session.logout_destroy), name='logout'),
+    path('logout', route(login_required(), post=authenticate_session.destroy), name='logout'),
 ]

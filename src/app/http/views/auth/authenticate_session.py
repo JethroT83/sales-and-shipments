@@ -46,3 +46,8 @@ def store(request):
 
     # nxt = request.POST.get('next') or request.GET.get('next')
     return redirect(reverse('web:dashboard'))
+
+@login_required
+def destroy(request):
+    logout(request)
+    return redirect(reverse('auth:login'))
